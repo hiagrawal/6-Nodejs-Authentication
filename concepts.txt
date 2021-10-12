@@ -1,0 +1,2 @@
+For encrypting password:
+npm install --save bcryptjs
