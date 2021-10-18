@@ -22,3 +22,13 @@ and server validates the same
 for this, we have csrfToken() method added by middleware that generates a random hashed csrf token
 which we pass to the view and send back the same in post request
 this should be with the name '_csrf' only as it looks for value of this tag only to validate the same
+
+Now, we need all views to add access to this token. For this we will have to pass this csrf paramter to our view 
+whereever we render the view
+
+to avoid this, we can add a middleware and set all variables that we need access to in all our views in res locals
+res.locals is a feature provided by node expressjs to set all local variables that we need to access in all views
+
+so, before we add our route middleware, we will add this middlware to add locals
+
+
