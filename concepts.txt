@@ -1,2 +1,24 @@
 For encrypting password:
 npm install --save bcryptjs
+
+for CSRF token: this is a package for node express which allows us to generate csrf token 
+npm install --save csurf
+
+1. we will include this pkg in application
+const csrf = require('csurf');
+2. Then we will initialize it like we are doing for express and mongoDb store
+const csrfProtection = csrf();
+3. Then we will add this as a middleware. This should be after sessions middleware has been added as it uses session.
+app.use(csrfProtection);
+4. so now every request that comes through will pass through this csrf middleware. 
+It validates all 'post' requests since post request has the data 
+5. Now we need to add csrf token to request that come to the server so server will check for this csrf token 
+and hence validates that it is a coming from a genuine request and not any fraud request
+
+for this, view must pass this csrf token, that is view must have access to this token
+so, when we render the page, we pass this paramter to view and then view passes this to server in post request 
+and server validates the same
+
+for this, we have csrfToken() method added by middleware that generates a random hashed csrf token
+which we pass to the view and send back the same in post request
+this should be with the name '_csrf' only as it looks for value of this tag only to validate the same
