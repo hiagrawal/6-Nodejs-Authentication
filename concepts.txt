@@ -31,4 +31,14 @@ res.locals is a feature provided by node expressjs to set all local variables th
 
 so, before we add our route middleware, we will add this middlware to add locals
 
+If we want some data to show in any middleware on basis of other middleware that is we want data to get access between multiple
+requests, then we can use sessions. But storing data in sessions for some error messages and then removing it might be very
+cumbersome and for this we have connect-flash package which uses sessions internally and remove it from session later
+npm install --save connect-flash
+
+1. First we need to include this in our application
+2. then we need to initialize it. This needs to be initialized after session
+3. this gives us access to flash() method through which we can set anything
+4. and access the same in another request middleware through key
+
 
