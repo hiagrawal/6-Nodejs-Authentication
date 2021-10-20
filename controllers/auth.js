@@ -2,18 +2,33 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
 
+//it returns an empty array and hence error msg is never null
+//to avoid this, can check the length manually and assign it to null if length is leass than 0
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  if(message.length > 0){
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    errorMessage: req.flash('error')
+    errorMessage: message
   });
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  if(message.length > 0){
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/signup', {
     path: '/signup',
-    pageTitle: 'Signup'
+    pageTitle: 'Signup',
+    errorMessage: message
   });
 };
 
@@ -47,7 +62,8 @@ exports.postLogin = (req, res, next) => {
           res.redirect('/');
         });
       }
-      return res.redirect('/login');
+      req.flash('error', 'Password do not match');
+      res.redirect('/login');
     })
     .catch(err => console.log(err));
   })
@@ -65,6 +81,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({email: email})
   .then(userDoc => {
     if(userDoc){
+      req.flash('error', 'Email already exists. Please pick a different one.');
       return res.redirect('/signup');
     }
     return bcrypt.hash(password, 12)
