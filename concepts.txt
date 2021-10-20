@@ -103,6 +103,21 @@ Nodemailer Official Docs: https://nodemailer.com/about/
 
 SendGrid Official Docs: https://sendgrid.com/docs/
 
+-----------------------------------------------------------------------------------------------------------------
+
+Advance Authentication:
+
+Here we want to achieve Reset Password functionality
+For Reset Password, we will give user a screen wherein user can enter email address, and when user click on REset Password
+willl send an link to the email provided and that link should be valid for some time only so will set an expiry date/time
+
+For this, we will create a unique token with some expiry date and store it in database so when user clicks on the link in the email,
+we would verify that that link is being sent by us only
+
+'crypto' is an inbuilt library provided by nodejs that helps to create a secure unique random value
+
+
+
 
 
 
