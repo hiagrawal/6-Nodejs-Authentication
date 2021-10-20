@@ -116,6 +116,24 @@ we would verify that that link is being sent by us only
 
 'crypto' is an inbuilt library provided by nodejs that helps to create a secure unique random value
 
+-------------------------------------------------------------------------------------------------------------------
+
+Authorization:
+
+Authorization means getting access to only those data which it has authorized to.
+
+Currently in our admin page, any user can edit or delete the product
+But we want only that user to edit or delete it, who has created it
+
+and for this, in admin products, we only show those products which are created by that user
+
+and to implement this, when we fetch the products on admin page from db, we pass the filter to fetch only those products
+for which userId is the logged in user id. and Logged in user we are saving in req.user in app js field
+
+so this way, we can achieve Authorization
+
+
+
 
 
 
