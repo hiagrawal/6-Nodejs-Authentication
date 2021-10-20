@@ -1,6 +1,8 @@
 For encrypting password:
 npm install --save bcryptjs
 
+------------------------------------------------------------------------------------------------------------
+
 for CSRF token: this is a package for node express which allows us to generate csrf token 
 npm install --save csurf
 
@@ -15,8 +17,8 @@ It validates all 'post' requests since post request has the data
 5. Now we need to add csrf token to request that come to the server so server will check for this csrf token 
 and hence validates that it is a coming from a genuine request and not any fraud request
 
-for this, view must pass this csrf token, that is view must have access to this token
-so, when we render the page, we pass this paramter to view and then view passes this to server in post request 
+for this, view (ui) must pass this csrf token, that is view (ui) must have access to this token
+so, when we render the page, we pass this paramter to view (ui) and then view (ui) passes this to server in post request 
 and server validates the same
 
 for this, we have csrfToken() method added by middleware that generates a random hashed csrf token
@@ -31,14 +33,72 @@ res.locals is a feature provided by node expressjs to set all local variables th
 
 so, before we add our route middleware, we will add this middlware to add locals
 
+---------------------------------------------------------------------------------------------------------------------------------
+Flash:
+
 If we want some data to show in any middleware on basis of other middleware that is we want data to get access between multiple
 requests, then we can use sessions. But storing data in sessions for some error messages and then removing it might be very
-cumbersome and for this we have connect-flash package which uses sessions internally and remove it from session later
+cumbersome and for this we have connect-flash package which uses sessions internally and remove it from session later automatically
 npm install --save connect-flash
 
 1. First we need to include this in our application
 2. then we need to initialize it. This needs to be initialized after session
 3. this gives us access to flash() method through which we can set anything
 4. and access the same in another request middleware through key
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Useful resources:
+
+Bcrypt Official Docs: https://github.com/dcodeIO/bcrypt.js
+
+More on CSRF Attacks: https://www.acunetix.com/websitesecurity/csrf-attacks/
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Sending Emails:
+
+Sending Email is highly complex and require a 'Mail Server' to handle all requests
+Hence majorly all companies including udemy using third party 'Mail Server' like aws encrypting
+and we also will use third party pkg to send mails
+There are many mail servers available like: 
+SES, AWS, MailTrim, SendGrid
+
+we will be using SendGrid as it is free till we send 100 mails in a day: https://sendgrid.com/
+
+Signup in SendGrid by creating an account
+Post signing up, verify single sender verification process
+make sure everywhere email addresses mentioned are the valid ones
+
+Now need to install this pkg in nodejs application
+npm install --save nodemailer nodemailer-sendgrid-transport
+
+nodemailer is used to for accessing email functionality in nodejs and 
+nodemailer-sendgrid-transport is used to interact with nodejs with SendGrid
+
+After signing up in SendGrid, go to Settings on the left panel -> API Keys -> and create an API key
+This will create an API key, copy that key and use it in api_key field in auth object inside sendGridTransport
+
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: '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'
+  }
+}))
+
+transporter.sendMail({
+          to: email,
+          from: 'agrawal.hina13@gmail.com',
+          subject: 'Signup Succeeded!',
+          html: '<h1>You successfully signed up!</h1>'
+        })   
+      })
+
+
+
+
+
 
 

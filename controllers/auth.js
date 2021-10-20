@@ -1,6 +1,16 @@
 const bcrypt = require('bcryptjs');
 
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+
 const User = require('../models/user');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: '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'
+  }
+}))
+
 
 //it returns an empty array and hence error msg is never null
 //to avoid this, can check the length manually and assign it to null if length is leass than 0
@@ -94,8 +104,19 @@ exports.postSignup = (req, res, next) => {
         return user.save();
       })
       .then(result => {
-        res.redirect('/login');      
-      }); 
+        res.redirect('/login');   
+        return transporter.sendMail({
+          to: email,
+          from: 'agrawal.hina13@gmail.com',
+          subject: 'Signup Succeeded!',
+          html: '<h1>You successfully signed up!</h1>'
+        })   
+      })
+      .then(result => {
+        console.log(result);
+        console.log('Email sent successfully');
+      })
+      .catch(err => console.log(err)); 
   })
   .catch(err => console.log(err));
 };
