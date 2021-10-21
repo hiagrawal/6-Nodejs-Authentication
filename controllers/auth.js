@@ -44,7 +44,8 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    errorMessage: message
+    errorMessage: message,
+    oldInput: {email: '', password: '', confirmPassword: ''}
   });
 };
 
@@ -111,7 +112,8 @@ exports.postSignup = (req, res, next) => {
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
+      oldInput: {email: email, password: password, confirmPassword: req.body.confirmPassword}
     });
   }
 
