@@ -4,6 +4,7 @@ const {check, body} = require('express-validator/check');
 //https://github.com/express-validator/express-validator/tree/56518106696e0c4a87a458c097ebca02be534f5c
 
 const authController = require('../controllers/auth');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -21,6 +22,9 @@ router.post('/login', authController.postLogin);
 //But giving in array just indicates that all inside checks  middleware are related to validations
 //body is another way to check, can use 'check' also but to show different params using 'body'
 //can add custom messages for each of the validator using withMessage or if common for all, can given in body method only as second paramter
+
+// we can return a reject promise also in custom validator which will set the error in req object as before
+//we used this reject promise instaed of throw Error since this is an async request and it will find in database asynchronously
 router.post(
 '/signup',
 [ 
@@ -28,10 +32,18 @@ router.post(
     .isEmail()
     .withMessage('Please enter a valid email')
     .custom((value, {req}) => {
-        if(value === 'test@test.com'){
-            throw new Error('This email address is forbidden');
-        }
-        return true;
+
+        // if(value === 'test@test.com'){
+        //     throw new Error('This email address is forbidden');
+        // }
+        // return true;
+
+        return User.findOne({email: value}).then(userDoc => {
+            if(userDoc){
+                return Promise.reject('Email already exists. Please pick a different one.');
+            }
+        });
+      
     }),
 
     // body('password')

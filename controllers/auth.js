@@ -92,7 +92,6 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
   const errors = validationResult(req);
 
   //422 is a status code which indicates validations have been failed and then we will render the same page
@@ -106,13 +105,17 @@ exports.postSignup = (req, res, next) => {
     });
   }
 
-  User.findOne({email: email})
-  .then(userDoc => {
-    if(userDoc){
-      req.flash('error', 'Email already exists. Please pick a different one.');
-      return res.redirect('/signup');
-    }
-    return bcrypt.hash(password, 12)
+  //we can do this email check also in the validation now instaed of doing it in the controller
+  //and return a reject promise which will set the error in req object as before
+  // User.findOne({email: email})
+  // .then(userDoc => {
+  //   if(userDoc){
+  //     req.flash('error', 'Email already exists. Please pick a different one.');
+  //     return res.redirect('/signup');
+  //   }
+
+  //   return bcrypt.hash(password, 12)
+      bcrypt.hash(password, 12)
       .then(hashedPassword => {
         const user = new User({
           email: email,
@@ -135,8 +138,8 @@ exports.postSignup = (req, res, next) => {
         console.log('Email sent successfully');
       })
       .catch(err => console.log(err)); 
-  })
-  .catch(err => console.log(err));
+  // })
+  // .catch(err => console.log(err));
 };
 
 exports.postLogout = (req, res, next) => {
