@@ -132,7 +132,26 @@ for which userId is the logged in user id. and Logged in user we are saving in r
 
 so this way, we can achieve Authorization
 
+-------------------------------------------------------------------------------------------------------------------
 
+Validations
+
+Server sode validations are the most important and crucial as validations can be done at client side
+but that is only for good user experience and does not solve the main purpose as end user can edit it from console or disable
+javascript. Hence server side validations are key
+
+With Express for validations, we have express validator pkg
+
+https://github.com/express-validator/express-validator/tree/56518106696e0c4a87a458c097ebca02be534f5c
+
+https://express-validator.github.io/docs/
+
+npm install --save express-validator
+
+Now lets add basic form validations for signUp page
+that email should be of email type
+Password should be 5 characters long
+and password and confirm password should match
 
 
 
