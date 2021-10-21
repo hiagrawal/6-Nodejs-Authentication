@@ -12,7 +12,7 @@ router.get('/signup', authController.getSignup);
 
 router.post('/login', authController.postLogin);
 
-router.post('/signup', check('email').isEmail() ,authController.postSignup);
+router.post('/signup', check('email').isEmail().withMessage('Please enter a valid email') ,authController.postSignup);
 //will add a 'validation middleware' on signup, so it will check for form input controls and if error will add it in req object 
 //that we can access in postSignUp controller method uisng 'validationResult' method provided by 'express-validator' pkg
 //the names inside validation middleware check method is the form control name on signup.ejs page/view
