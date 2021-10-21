@@ -22,11 +22,13 @@ router.post('/login',[
                 return Promise.reject('Email does not exist');
             }
         });
-    }),
+    })
+    .normalizeEmail(),
 
     body('password', 'Please enter a password with only numbers and text and atleast 5 characters.')
     .isLength({min:5})
-    .isAlphanumeric(),
+    .isAlphanumeric()
+    .trim(),
 
 ], authController.postLogin);
 
@@ -41,6 +43,10 @@ router.post('/login',[
 
 // we can return a reject promise also in custom validator which will set the error in req object as before
 //we used this reject promise instaed of throw Error since this is an async request and it will find in database asynchronously
+
+//normalizeEmail and trim are sanitize methods which makes sure that data is stored in a uniform way
+//normalizeEmail converts all in lower case and trim trims the leading whitespaces
+//Can check all sanitize methods here: https://github.com/validatorjs/validator.js
 router.post(
 '/signup',
 [ 
@@ -60,7 +66,8 @@ router.post(
             }
         });
       
-    }),
+    })
+    .normalizeEmail(),
 
     // body('password')
     // .isLength({min:5})
@@ -70,7 +77,8 @@ router.post(
 
     body('password', 'Please enter a password with only numbers and text and atleast 5 characters.')
     .isLength({min:5})
-    .isAlphanumeric(),
+    .isAlphanumeric()
+    .trim(),
 
     body('confirmPassword')
     .custom((value, {req}) => {
@@ -79,6 +87,7 @@ router.post(
         }
         return true;
     })
+    .trim()
 ],
 
 authController.postSignup
