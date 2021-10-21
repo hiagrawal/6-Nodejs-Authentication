@@ -146,6 +146,8 @@ https://github.com/express-validator/express-validator/tree/56518106696e0c4a87a4
 
 https://express-validator.github.io/docs/
 
+https://github.com/validatorjs/validator.js :  To see all built-in validators
+
 npm install --save express-validator
 
 Now lets add basic form validations for signUp page
