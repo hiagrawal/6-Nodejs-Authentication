@@ -187,6 +187,25 @@ This is a special middleware which takes 4 argumnets: error, req, res, next whic
 
 If we have more than one error handling middleware, then they will execute from top to bottom just like the normal middleware
 
+----------------------------------------------
+
+Error Handling in sync and async calls execution:
+
+To reach to the expressjs error middleware, we call the next method with the new error to go to the error handling middleware. 
+This is in case we have async calls like in then and catch, promises, callbacks. 
+There we necessarily need to call 'next(new Error())' to reach to the middleware
+
+However, if it is Synchronous call, then can directly call 'throw new Error('Some dummy error')' to reach to the expressjs 
+error handling middleware
+
+---------------------------------
+
+Error Handling in Express.js - Official Docs: https://expressjs.com/en/guide/error-handling.html
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 

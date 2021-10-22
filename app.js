@@ -45,6 +45,8 @@ app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
+  //throw new Error(err); 
+  //if it is outside of async call, then can use throw new Error to go to error middleware
   User.findById(req.session.user._id)
     .then(user => {
       if(!user){
@@ -54,7 +56,10 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => {
-      throw new Error(err); //Instead of just logging the error, we can throw the error given by nodejs
+      //throw new Error(err); 
+      //Here throw new Error will not serve any purpose as to reach to the error handling middlware, next HAS to be called
+      //since this is in an async call (using then and catch)
+      next(new Error(err));
     });
 });
 
