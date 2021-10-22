@@ -178,6 +178,9 @@ In routes file, where we are using express-validator middleware, there for custo
 'throw new Error' which throws the error so it is being internally catched by express-validator and so it gives us all the errors 
 array including thrown error in validationResult
 
+In case of catch() method, wherein we are just logging the error which anyways is crashing the page and execution,
+we can make a generic error 500 page which is a server error code and render that page instead of exception
+
 
 
 

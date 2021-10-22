@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const {validationResult} = require('express-validator/check');
 
 const Product = require('../models/product');
@@ -39,6 +41,7 @@ exports.postAddProduct = (req, res, next) => {
 
 
   const product = new Product({
+    //_id: new mongoose.Types.ObjectId('617026346ea0331f04ab6a5f'), //manually giving this to throw an error to check catch block functionality
     title: title,
     price: price,
     description: description,
@@ -53,7 +56,8 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products');
     })
     .catch(err => {
-      console.log(err);
+      //console.log(err);
+      res.redirect('/500');
     });
 };
 
