@@ -161,6 +161,24 @@ Express-Validator Docs: https://express-validator.github.io/docs/
 
 Validator.js (which is used behind the scenes) Docs: https://github.com/chriso/validator.js
 
+------------------------------------------------------------------------------------------------------------
+
+Error Handling:
+
+Synchronous code are handled using try catch block and asynchronous code can be handled using then and catch
+
+we have 'throw new Error' provided by nodejs that we can use to throw the error but it throws exception 
+and stops the further execution
+
+to avoid, we can catch the thrown error and handle it so code execution will continue as is
+
+we can check this in error-playground.ejs file
+
+In routes file, where we are using express-validator middleware, there for custom validation we are throwing error using 
+'throw new Error' which throws the error so it is being internally catched by express-validator and so it gives us all the errors 
+array including thrown error in validationResult
+
+
 
 
 
