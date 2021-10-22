@@ -181,6 +181,14 @@ array including thrown error in validationResult
 In case of catch() method, wherein we are just logging the error which anyways is crashing the page and execution,
 we can make a generic error 500 page which is a server error code and render that page instead of exception
 
+Expressjs Error handling middleware
+when we give next(new Error()) then expressjs skips all other middleware and goes to the error handling middleware
+This is a special middleware which takes 4 argumnets: error, req, res, next which indicates that this is a error handling middlware
+
+If we have more than one error handling middleware, then they will execute from top to bottom just like the normal middleware
+
+
+
 
 
 

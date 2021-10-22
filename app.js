@@ -72,6 +72,13 @@ app.get('/500', errorController.get500);
 
 app.use(errorController.get404);
 
+//This is a special middleware which takes 4 argumnets: error, req, res, next 
+//which indicates that this is a error handling middlware
+app.use((error, req, res, next) => {
+  //res.status(error.httpStatusCode).render(...); This is how we can access the httpStatusCode paramter passed in error object
+  res.redirect('/500');
+})
+
 mongoose
   .connect(MONGODB_URI)
   .then(result => {

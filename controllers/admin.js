@@ -57,7 +57,10 @@ exports.postAddProduct = (req, res, next) => {
     })
     .catch(err => {
       //console.log(err);
-      res.redirect('/500');
+      //res.redirect('/500');
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error); //skips all other middleware and goes to the error handling middleware
     });
 };
 
@@ -69,6 +72,7 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
+      //throw new Error('Throwing dummy error to check catch block');
       if (!product) {
         return res.redirect('/');
       }
@@ -83,7 +87,12 @@ exports.getEditProduct = (req, res, next) => {
 
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500; // this is just to show that we can pass some extra info as well with the error object 
+      //that we can use in the expressjs error handling middleware
+      return next(error); //skips all other middleware and goes to the error handling middleware
+    });
 };
 
 //Added authorization to edit only if userId matches with the current logged in user
