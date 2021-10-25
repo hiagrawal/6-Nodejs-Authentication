@@ -136,18 +136,30 @@ exports.getInvoice = (req, res, next) => {
     const invoiceName = 'invoice-' + orderId + '.pdf';
     const invoicePath = path.join('data', 'invoices', invoiceName)
 
-    fs.readFile(invoicePath, (err, data) => {
-      if(err){
-        return next(err);
-      }
-      //this will set it to extension pdf
-      res.setHeader('Content-Type', 'application/pdf');
-      //this will download the file as attachment
-      //res.setHeader('Content-Disposition', 'attachment;filename="'+ invoiceName +'"');
-      //this will open it inline in the browser
-      res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
-      res.send(data);
-    });
+    //to send the response, we are reading the file, if we read like this, node will read the entire file in memory and 
+    //then will return it, which is obviously not a good idea since it will take a lot of time, memory, may go out of memory flow also
+    //if bigger file or if multiple file requests which will be there in real time
+    // fs.readFile(invoicePath, (err, data) => {
+    //   if(err){
+    //     return next(err);
+    //   }
+    //   //this will set it to extension pdf
+    //   res.setHeader('Content-Type', 'application/pdf');
+    //   //this will download the file as attachment
+    //   //res.setHeader('Content-Disposition', 'attachment;filename="'+ invoiceName +'"');
+    //   //this will open it inline in the browser
+    //   res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
+    //   res.send(data);
+    // });
+
+    //so instead of reading all together which takes a lot of time and memory, we will read in chunks and streams of data
+    //and write it in chunks in res object. and then it will be created on the fly in the browser which fetching all streams of data
+    //and concatenating it
+    const file = fs.createReadStream(invoicePath);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
+    file.pipe(res);
+    
   })
   .catch(err => {
     return next(new Error(err));
