@@ -47,9 +47,22 @@ const fileStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname); //first paramter is error, second is filename. TO make it unique, we can add date to it
+    //cb(null, new Date().toISOString() + '-' + file.originalname); //not working currently
   }
 })
-app.use(multer({storage: fileStorage}).single('image'));
+//app.use(multer({storage: fileStorage}).single('image'));
+
+//we can also give multiple file options and what files to accept
+const fileFilter = (req, file, cb) => {
+  if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+    cb(null, true);
+  }
+  else{
+    cb(null, false);
+  }
+};
+
+app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
