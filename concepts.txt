@@ -209,7 +209,24 @@ File Upload and download
  - We will learn how to upload and download files from the server
  - in Add product, instead of ImageUrl, we now will use file upload
 
- 
+ When we use File, we see that image field is always blank in postAddProduct req body
+ This is because, to read every request, we use 'bodyParser.urlencoded' to fetch req data
+ this works only for text field and can read and parse and understand only the text data
+ But when we upload image, it is in bytes form and hence to parse it so that we can get it in req object, 
+ we need third party package called 'multer'
+
+ Multer parses incoming requests for Files. It can be used to parse text data as well. It parses both. 
+
+It works on the basis of encType value provided in form.
+By default, if we dont give any, form takes 'application/x-www-form-urlencoded' encType value 
+which means this file has only text type of data and hence bodyParser can parse it
+
+Multer looks for encType value 'multipart/form-data' which indicates it has multiple type of data
+and hence multer can parse text and file both type of data
+
+Install:
+npm install --save multer
+
 
 
 
