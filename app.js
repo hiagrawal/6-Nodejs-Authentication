@@ -65,6 +65,17 @@ const fileFilter = (req, file, cb) => {
 app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+//to serve the images on the view products, we will give access to the path
+//this will make pathn something like http://localhost:3000/admin/images/white-vest.png
+//to make it http://localhost:3000/images/white-vest.png, will have to make it absolute path and not relative and for that can add '/' to all view image url src path
+//app.use(express.static(path.join(__dirname, 'images')));
+
+//now the path will be http://localhost:3000/images/yellow-track-suit.png
+//but images are serverd statically that is it will get the image when path will be http://localhost:3000/yellow-track-suit.png
+//for this, will add 'images' as a path in the middleware that is if path is /images that serve the files statically under images folder
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use(
   session({
     secret: 'my secret',

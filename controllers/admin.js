@@ -63,7 +63,7 @@ exports.postAddProduct = (req, res, next) => {
       path: '/admin/add-product',
       editing: false,
       errorMessage: errors.array()[0].msg,
-      product: {title, imageUrl, price, description},
+      product: {title, price, description},
       hasError: true,
       validationErrors: errors.array()
     });
