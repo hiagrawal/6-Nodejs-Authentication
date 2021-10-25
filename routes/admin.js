@@ -15,9 +15,10 @@ router.get('/add-product', isAuth, adminController.getAddProduct);
 router.get('/products', isAuth, adminController.getProducts);
 
 // /admin/add-product => POST
+//since imageUrl is not a url now. Instaed we have made this a file Upload so we can remove this check here
 router.post('/add-product', [
     body('title', 'Enter valid title').isString().isLength({min:5}).trim(),
-    body('imageUrl', 'Enter valid Image').isURL(),
+    // body('imageUrl', 'Enter valid Image').isURL(),
     body('price', 'Enter valid price').isFloat(),
     body('description', 'Enter valid description').isLength({min: 5, max: 400}).trim()
 ] , isAuth, adminController.postAddProduct);
@@ -26,7 +27,7 @@ router.get('/edit-product/:productId', isAuth, adminController.getEditProduct);
 
 router.post('/edit-product', [
     body('title', 'Enter valid title').isString().isLength({min:5}).trim(),
-    body('imageUrl', 'Enter valid Image').isURL(),
+    // body('imageUrl', 'Enter valid Image').isURL(),
     body('price', 'Enter valid price').isFloat(),
     body('description', 'Enter valid description').isLength({min: 5, max: 400}).trim()
 ] , isAuth, adminController.postEditProduct);

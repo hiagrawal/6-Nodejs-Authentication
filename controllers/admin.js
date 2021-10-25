@@ -5,6 +5,7 @@ const {validationResult} = require('express-validator/check');
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
+  console.log('rendering');
   if(!req.session.isLoggedIn){
     return res.redirect('/login');
   }
@@ -19,10 +20,17 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
+  //console.log('inside post');
+  //console.log(req);
+  //when we console req, we can see that it saves the image in 'file' object and text types in 'body' object
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  //const imageUrl = req.body.imageUrl;
+  const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
+  console.log(imageUrl);
+  // we see that it saves the data in buffer, to fix this, we can add property 'dest:images'
+  // so it converts buffer in memory into binary data in path field and store in automatic created images folder
 
   const errors = validationResult(req);
 
