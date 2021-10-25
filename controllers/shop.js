@@ -130,6 +130,12 @@ exports.getInvoice = (req, res, next) => {
     if(err){
       return next(err);
     }
+    //this will set it to extension pdf
+    res.setHeader('Content-Type', 'application/pdf');
+    //this will download the file as attachment
+    //res.setHeader('Content-Disposition', 'attachment;filename="'+ invoiceName +'"');
+    //this will open it inline in the browser
+    res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
     res.send(data);
   });
 }
