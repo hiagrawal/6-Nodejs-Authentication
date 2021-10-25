@@ -204,7 +204,12 @@ Error Handling in Express.js - Official Docs: https://expressjs.com/en/guide/err
 
 -------------------------------------------------------------------------------------------------------------------------
 
+File Upload and download
 
+ - We will learn how to upload and download files from the server
+ - in Add product, instead of ImageUrl, we now will use file upload
+
+ 
 
 
 
