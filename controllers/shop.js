@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const pdfDocument = require('pdfkit');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 
@@ -155,11 +157,25 @@ exports.getInvoice = (req, res, next) => {
     //so instead of reading all together which takes a lot of time and memory, we will read in chunks and streams of data
     //and write it in chunks in res object. and then it will be created on the fly in the browser which fetching all streams of data
     //and concatenating it
-    const file = fs.createReadStream(invoicePath);
+    // const file = fs.createReadStream(invoicePath);
+    // res.setHeader('Content-Type', 'application/pdf');
+    // res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
+    // file.pipe(res);
+
+    //Till now, we are reading the data from the dummy pdf file we just added
+    //However, we will have to craete the pdf file on the order data and write it to the file stream as well as serve it to the server
+    //for this, we will use pdfkit which creates pdf on the file
+    const pdfDoc = new pdfDocument();
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'inline;filename="'+ invoiceName +'"');
-    file.pipe(res);
-    
+    pdfDoc.pipe(fs.createWriteStream(invoicePath)); //so we will write it to the file
+    pdfDoc.pipe(res); //as well as serve it to the server
+
+    //Now will start writing to file
+    pdfDoc.text('Hello World!');
+
+    pdfDoc.end(); //end will indicate that it is end od document and it has finished writing
+
   })
   .catch(err => {
     return next(new Error(err));

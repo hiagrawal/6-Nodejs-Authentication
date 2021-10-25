@@ -227,7 +227,10 @@ and hence multer can parse text and file both type of data
 Install:
 npm install --save multer
 
+to create pdf on nodejs server, we can use : PDFKit:  https://pdfkit.org/
 
+To install: 
+npm install --save pdfkit
 
 
 
