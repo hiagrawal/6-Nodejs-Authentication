@@ -329,7 +329,15 @@ but also in the header (that we are doing now for delete request, setting in hea
 for the header it looks for 'csrf-token' key) 
 or even in the query paramters
 
+Please note that while deleting like this, the page was not reloaded instead the existing page was updated
 
+Useful resources:
+
+More on the fetch API: https://developers.google.com/web/updates/2015/03/introduction-to-fetch
+
+More on AJAX Requests: https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+
+----------------------------------------------------------------------------------------------------------------------
 
 
 
