@@ -6,6 +6,8 @@ const pdfDocument = require('pdfkit');
 const Product = require('../models/product');
 const Order = require('../models/order');
 
+const ITEMS_PER_PAGE = 2;
+
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {
@@ -35,7 +37,16 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  const page = req.query.page;
+
+  //if we want to fetch some data from backend and skip some data or limit some data then mongoose provides us 'skip' and 'limit' methods
+  //find provides us a cursor so we can use skip and limit methods on it
+  //so basically we want 1st, 2nd item on page 1, 3rd, 4th item on page 2, 5th 6th item on page 3 and so on...
+  //so we want to skip items that were on previous pages and fetch only the current page data
+  //and limit per page data to 2 since we are showing 2 products on a page
   Product.find()
+    .skip((page-1) * ITEMS_PER_PAGE)
+    .limit(ITEMS_PER_PAGE)
     .then(products => {
       res.render('shop/index', {
         prods: products,
