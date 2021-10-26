@@ -262,6 +262,10 @@ you can control how many items you want to fetch and how many you want to skip.
 When using Sequelize, the official docs describe how to add pagination: 
 https://sequelize.org/master/manual/model-querying-basics.html
 
+Mongoose gives us 'count' method to get the total items count
+
+
+
 
 
 

@@ -37,6 +37,15 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  // Product.find().then(products => {
+  //     res.render('shop/index', {
+  //       prods: products,
+  //       pageTitle: 'Shop',
+  //       path: '/'
+  //     });
+  // });
+
+  //when applying pagination
   const page = req.query.page;
 
   //if we want to fetch some data from backend and skip some data or limit some data then mongoose provides us 'skip' and 'limit' methods
@@ -44,18 +53,36 @@ exports.getIndex = (req, res, next) => {
   //so basically we want 1st, 2nd item on page 1, 3rd, 4th item on page 2, 5th 6th item on page 3 and so on...
   //so we want to skip items that were on previous pages and fetch only the current page data
   //and limit per page data to 2 since we are showing 2 products on a page
-  Product.find()
-    .skip((page-1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+  // Product.find().skip((page-1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE).then(products => {
+  //     res.render('shop/index', {
+  //       prods: products,
+  //       pageTitle: 'Shop',
+  //       path: '/'
+  //     });
+  //   });
+
+    //we need to have total items count as well to show pagination buttons accordingly. for that, we can use 'count' method
+    //which returns the total items count
+    let totalItems;
+    Product.find().count().then(numProducts => {
+      totalItems = numProducts;
+      return Product.find().skip((page-1) * ITEMS_PER_PAGE).limit(ITEMS_PER_PAGE)
+    })
     .then(products => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
-        path: '/'
+        path: '/',
+        totalProducts: totalItems,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
     })
     .catch(err => {
-      console.log(err);
+      next(new Error(err));
     });
 };
 
