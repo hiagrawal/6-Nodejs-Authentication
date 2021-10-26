@@ -341,6 +341,21 @@ More on AJAX Requests: https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/G
 
 Adding Payments:
 
+For this, we will use 'Stripe payments'
+to use stripe at clinet side, we will include js file: https://js.stripe.com/v3/
+and to use the same at server side, we will install stripe: npm install --save stripe
+
+Payment is successful:
+usecard: 4242 4242 4242 4242
+exp date: any future date
+cvv: anything lets say 123
+address: should be outside India 
+Give Germany and enter Test Test in all fields
+payment will be successful
+
+------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 
