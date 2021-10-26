@@ -339,6 +339,8 @@ More on AJAX Requests: https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/G
 
 ----------------------------------------------------------------------------------------------------------------------
 
+Adding Payments:
+
 
 
 
