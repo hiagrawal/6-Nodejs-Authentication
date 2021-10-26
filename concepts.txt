@@ -240,6 +240,11 @@ Streaming Files: https://medium.freecodecamp.org/node-js-streams-everything-you-
 
 Generating PDFs with PDFKit: http://pdfkit.org/docs/getting_started.html
 
+-----------------------------------------------------------------------------------------------------------------
+
+Pagination:
+
+
 
 
 
