@@ -267,6 +267,35 @@ These all count, skip, limit operations are faster that retrieving data.
 These all operations are called on cursor provided by find method. 
 These all filtering and all logic is not done at server side rather than at database side.
 
+--------------------------------------------------------------------------------------------------------
+
+Understanding Async requests
+
+Till now, we have seen requests that we submit as 'post' method usually in form and return html page in response
+either through redirect or render
+REturning complete html page re-renders the page if on the same page
+
+There might be scenarios wherein we just want to send some json data to the server may through some url
+and send back some josn data only in response and not the complete html. These are called async requests
+
+For ex: When we delete the product on admin products page, we send the request via form post method, delete the product
+and ends back the entire same products same in response so basically we are re-rendering the page on every delete
+
+This we can change using async javascript request 
+
+public folder is served statically in app.js file so all folders inside that public folder that is css and js folder will be 
+served in the browser and hence will be considered at the client side
+so we can add one javascript file inside js folder to write client side javascript code that will be rendered in the browser
+
+images are served statically statically and public folder is served statically that is css and js in public folder
+so all these will be avaiable in browser (can see in sources tab) and hence will be considered at client side
+
+when button type is submit, it automatically submits the form and send a post request to the server so
+Now, for delete functionality, we do not want to submit the form so we will remove type submit from button 
+and form section also since there is no post method now
+
+
+
 
 
 
