@@ -221,3 +221,28 @@ exports.postDeleteProduct = (req, res, next) => {
       return next(new Error(err));
     })
 };
+
+exports.deleteProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+    Product.findById(prodId)
+    .then(product => {
+      if(!product){
+        return next(new Error('Product not Found!'));
+      }
+      fileHelper.deleteFile(product.imageUrl);
+      return Product.deleteOne({_id: prodId, userId: req.user._id})
+    })
+    .then(() => {
+        console.log('DESTROYED PRODUCT');
+        //now instead of returning complete html page, we will return json data
+        //res.redirect('/admin/products');
+
+        //json data can be returned by using json mehod provided by expressjs. 
+        //we just need to pass normal data/normal object and express will convert it into json when used json method
+        res.status('200').json({message: 'Success!'});
+      })
+    .catch(err => {
+      res.status('500').json({message: 'Deleting product failed.'});
+    })
+};
+

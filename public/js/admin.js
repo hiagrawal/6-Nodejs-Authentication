@@ -4,4 +4,17 @@ const deleteProduct = (btn) => {
    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
    console.log(prodId);
    console.log(csrf);
+
+   fetch('/admin/product/' + prodId, {
+    method: 'DELETE',
+    headers: {
+        'csrf-token': csrf
+    }
+   })
+   .then(result => {
+       console.log(result);
+   })
+   .catch(err => {
+       console.log(err);
+   })
 };
