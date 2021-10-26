@@ -1,0 +1,20 @@
+<!-- can add '/' in path (<a href="/?page=1">1</a>) for absolute path that is with respect to root 'http://localhost:3000/?page=1'
+without '/' (<a href="?page=1">1</a>) will make it relative path that is whatever path we are on lets say we are on 
+'http://localhost:3000/products' so will add query paramter to this that is http://localhost:3000/products?page=1 -->
+
+<section class="pagination">
+    <% if(currentPage !== 1 && previousPage !== 1){ %>
+        <a href="?page=1">1</a>
+    <% } %>
+    <% if(hasPreviousPage){ %>
+        <a href="?page=<%= previousPage %>"><%= previousPage %></a>
+    <% } %>
+    <a href="?page=<%= currentPage %>" class="active"><%= currentPage %></a>
+    <% if(hasNextPage){ %>
+        <a href="?page=<%= nextPage %>"><%= nextPage %></a>
+    <% } %>
+    <% if(lastPage !== currentPage && nextPage !== lastPage){ %>
+        <a href="?page=<%= lastPage %>"><%= lastPage %></a>
+    <% } %>
+    
+</section>
